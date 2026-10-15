@@ -1,0 +1,166 @@
+@use 'tokens' as *;
+
+// Figma desktop: manufacture (15:2755) — y 1970 (220 от about), колонка 1720, gap 60, карточки 553 × 3, gap 30.
+// Mobile (26:3402): 80 от about, заголовок 30px, gap 32, карточка 327. Tablet-макета нет — как mobile, крупнее.
+.manufacture {
+  padding: u(220) var(--gutter) 0;
+  // Карточки, ждущие за правым краем, не должны давать горизонтальный скролл (clip не ломает sticky)
+  overflow-x: clip;
+
+  @include tablet {
+    padding-top: u(120);
+  }
+
+  @include mobile {
+    padding-top: u(80);
+  }
+}
+
+// desktop/H2 64 / 110% / −4%; mobile 30 / 110% / −5%; tablet — как заголовок about на tablet (34 / 100% / −5%)
+.manufacture__title {
+  font-size: u(64);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+
+  @include tablet {
+    font-size: u(34);
+    line-height: 1;
+    letter-spacing: -0.05em;
+  }
+
+  @include mobile {
+    font-size: u(30);
+    letter-spacing: -0.05em;
+  }
+}
+
+.manufacture__stage {
+  margin-top: u(60);
+
+  @include tablet {
+    margin-top: u(48);
+  }
+
+  @include mobile {
+    margin-top: u(32);
+  }
+}
+
+.manufacture__track {
+  display: flex;
+  align-items: flex-start;
+  gap: u(30);
+
+  // Tablet / mobile: стопка как в портфолио, только по горизонтали. Трек липнет в окне,
+  // пока скроллится высокая обёртка (высоту задаёт JS), и карточки по очереди въезжают
+  // справа поверх предыдущей. Без анимаций — обычная колонка.
+  @include below-desktop {
+    --shop-w: #{u(400)};
+    flex-direction: column;
+    gap: u(16);
+
+    @media (prefers-reduced-motion: no-preference) {
+      position: sticky;
+      top: var(--shops-top, 0px);
+      display: grid;
+      grid-template-areas: 'stack';
+      align-items: start;
+    }
+  }
+
+  // Mobile: стопка прижата к низу окна, поэтому карточки разной высоты выравниваются по нижнему краю
+  @include mobile {
+    --shop-w: 100%;
+
+    @media (prefers-reduced-motion: no-preference) {
+      align-items: end;
+    }
+  }
+}
+
+.shop {
+  flex: none;
+  width: u(553);
+
+  @include below-desktop {
+    width: var(--shop-w);
+
+    @media (prefers-reduced-motion: no-preference) {
+      grid-area: stack;
+    }
+  }
+}
+
+.shop__inner {
+  transform-origin: left center;
+
+  @include below-desktop {
+    @media (prefers-reduced-motion: no-preference) {
+      will-change: transform, opacity;
+    }
+  }
+}
+
+.shop__img {
+  width: 100%;
+  height: u(342);
+  object-fit: cover;
+
+  @include below-desktop {
+    height: auto;
+    aspect-ratio: 327 / 340;
+  }
+}
+
+// text: зелёная полоса, padding 8 / 30, desktop/H5 34 / 100% / −3%, lower; mobile 26, padding 8 / 24
+.shop__name {
+  padding: u(8) u(30);
+  background: var(--c-green);
+  color: var(--c-bg);
+  font-size: u(34);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-transform: lowercase;
+
+  @include below-desktop {
+    padding: u(8) u(24);
+    font-size: u(26);
+  }
+}
+
+// text: Main/Dark-gray, padding 30, gap 20; desktop/Text3 22 / 120% / −4%; заголовок 22 Bold / 110%
+.shop__body {
+  display: flex;
+  flex-direction: column;
+  gap: u(20);
+  padding: u(30);
+  background: var(--c-surface);
+  font-size: u(22);
+  line-height: 1.2;
+  letter-spacing: -0.04em;
+
+  h4 {
+    margin: 0 0 u(5);
+    font-size: u(22);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  // mobile/Text3 16 / 110% / −4%, заголовок mobile/H7 16 Bold
+  @include below-desktop {
+    padding: u(24);
+    font-size: u(16);
+    line-height: 1.1;
+
+    h4 {
+      font-size: u(16);
+    }
+  }
+}

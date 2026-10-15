@@ -1,0 +1,71 @@
+// Значения из Figma (FatProject-website): стили Main/*, Text/*, desktop/*, mobile/*.
+
+// Все размеры пишутся в «пикселях макета» через u(): на desktop 1px макета = 1/1920 ширины
+// окна (но не больше 1px), на mobile — 1/375 ширины. Так 1440 и 1920 сохраняют композицию 1:1.
+@function u($px) {
+  @return calc(#{$px} * var(--u));
+}
+
+$bp-tablet: 768px;
+$bp-desktop: 1200px;
+
+@mixin mobile {
+  @media (max-width: #{$bp-tablet - 1}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: $bp-tablet) and (max-width: #{$bp-desktop - 1}) {
+    @content;
+  }
+}
+
+@mixin below-desktop {
+  @media (max-width: #{$bp-desktop - 1}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: $bp-desktop) {
+    @content;
+  }
+}
+
+:root {
+  // Main/Black, Main/Dark-gray, Main/Green, Text/Gray, Text/White
+  --c-bg: #1e232a;
+  --c-surface: #2d3238;
+  --c-green: #a8df8f;
+  --c-gray: #708486;
+  --c-white: #ffffff;
+  --c-heading: #fefffc;
+
+  // gradient/cover
+  --g-cover: linear-gradient(19.46deg, #1e232a 20.12%, #1f2427 70%, #203036 100%);
+
+  // Ease из референса Mammut Studios (их --ease-osmo)
+  --ease: cubic-bezier(0.625, 0.05, 0, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --font: 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --u: min(calc(100vw / 1920), 1px);
+  --gutter: #{u(100)};
+}
+
+// Tablet (макет 768): 1px макета = 1px экрана, шире 768 композиция тянется процентами
+@include below-desktop {
+  :root {
+    --u: 1px;
+    --gutter: #{u(24)};
+  }
+}
+
+@include mobile {
+  :root {
+    --u: min(calc(100vw / 375), 1.25px);
+    --gutter: #{u(24)};
+  }
+}

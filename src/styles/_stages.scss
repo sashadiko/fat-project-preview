@@ -1,0 +1,193 @@
+@use 'tokens' as *;
+
+// Figma desktop: stages (31:3615) — y 7013 (220 от projects), кадр 1920 × 1115; заголовок x 100 (470 wide),
+// этапы x 975 (680), gap 100. Mobile (31:3652): колонка 327, заголовок 34, gap 40, этапы gap 32.
+.stages {
+  padding: u(220) var(--gutter) 0;
+
+  @include tablet {
+    padding-top: u(120);
+  }
+
+  @include mobile {
+    padding-top: u(80);
+  }
+}
+
+.stages__inner {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: u(875) u(680);
+  align-items: start;
+
+  @include tablet {
+    grid-template-columns: 38% 1fr;
+    column-gap: u(24);
+  }
+
+  @include mobile {
+    display: flex;
+    flex-direction: column;
+    gap: u(40);
+  }
+}
+
+// Vector 11 (30:3524): 1080 × 1200, x −160 / y −125 от верха кадра, кадр режет его сверху
+.stages__bg {
+  position: absolute;
+  z-index: -1;
+  top: u(-125);
+  left: calc(var(--gutter) * -1 - #{u(160)});
+  width: u(1080);
+  height: u(1200);
+  max-width: none;
+  clip-path: inset(u(125) 0 0 0);
+  pointer-events: none;
+
+  @include below-desktop {
+    display: none;
+  }
+}
+
+// Липкий заголовок: живёт внутри своей колонки, поэтому отпускается вместе с концом секции
+.stages__aside {
+  align-self: stretch;
+
+  @include mobile {
+    align-self: auto;
+  }
+}
+
+// desktop/H2 64 / 110% / −4%; mobile 34 / 110% / −5%
+.stages__title {
+  position: sticky;
+  top: u(160);
+  font-size: u(64);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+
+  @include tablet {
+    top: u(120);
+    font-size: u(40);
+  }
+
+  @include mobile {
+    position: static;
+    font-size: u(34);
+    letter-spacing: -0.05em;
+  }
+}
+
+.stages__list {
+  display: flex;
+  flex-direction: column;
+  gap: u(100);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  @include tablet {
+    gap: u(64);
+  }
+
+  @include mobile {
+    gap: u(32);
+  }
+}
+
+// point: number 50 + gap 60 + text 600
+.stage {
+  display: flex;
+  align-items: flex-start;
+  gap: u(60);
+
+  @include tablet {
+    gap: u(24);
+  }
+
+  @include mobile {
+    gap: u(16);
+  }
+}
+
+// number: 50 × 50, desktop/Numbers3 50 / 100%; mobile 30 × 30, 30px
+.stage__num {
+  flex: none;
+  width: u(50);
+  height: u(50);
+  padding: 0;
+  font-size: u(50);
+  font-weight: 600;
+  line-height: 1;
+
+  @include tablet {
+    width: u(40);
+    height: u(40);
+    font-size: u(40);
+  }
+
+  @include mobile {
+    width: u(30);
+    height: u(30);
+    font-size: u(30);
+  }
+}
+
+// В Figma текст 600 при колонке 680 (50 + 60 + 600 = 710) — выходит за колонку, не сжимаем
+.stage__text {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: u(20);
+  width: u(600);
+
+  // desktop/H4 46 / 110% / −3%
+  h3 {
+    font-size: u(46);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+  }
+
+  // desktop/Text1 30 Medium / 120% / −3%, Text/Gray
+  p {
+    color: var(--c-gray);
+    font-size: u(30);
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+  }
+
+  @include tablet {
+    flex: 1;
+    width: auto;
+    gap: u(12);
+
+    h3 {
+      font-size: u(32);
+    }
+
+    p {
+      font-size: u(20);
+    }
+  }
+
+  // mobile/H4 25 / 110% / −3%; текст 14 Regular / 120% / −4%, Text/Gray; gap 16
+  @include mobile {
+    flex: 1;
+    width: auto;
+    gap: u(16);
+
+    h3 {
+      font-size: u(25);
+    }
+
+    p {
+      font-size: u(14);
+      font-weight: 400;
+      letter-spacing: -0.04em;
+    }
+  }
+}

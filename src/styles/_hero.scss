@@ -1,0 +1,171 @@
+@use 'tokens' as *;
+
+// Figma: cover (1:3727) — 1920×1000, gradient/cover
+.hero {
+  position: relative;
+  height: u(1000);
+  overflow: hidden;
+  background: var(--g-cover);
+
+  @include tablet {
+    height: u(1024);
+  }
+
+  // Mobile cover (21:3393): 375 × 720
+  @include mobile {
+    height: u(720);
+  }
+}
+
+// text (21:3109): x 199, y 200, w 1522, vertical, gap 30, center
+.hero__text {
+  position: absolute;
+  top: u(200);
+  left: 50%;
+  width: u(1522);
+  translate: -50% 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: u(30);
+  text-align: center;
+
+  @include tablet {
+    top: u(170);
+    width: calc(100% - 2 * var(--gutter));
+    max-width: u(720);
+    gap: u(48);
+  }
+
+  // Mobile text (26:3401): y 160
+  @include mobile {
+    top: u(160);
+    width: u(343);
+    gap: u(16);
+  }
+}
+
+// desktop/H1: Inter Semi Bold 88 / 110% / -4%, UPPER, #FEFFFC
+.hero__title {
+  width: 100%;
+  color: var(--c-heading);
+  font-size: u(88);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+
+  // Tablet: Inter Semi Bold 68 / 100% / -4%
+  @include tablet {
+    font-size: u(68);
+    line-height: 1;
+  }
+
+  @include mobile {
+    font-size: u(42);
+  }
+}
+
+// points (21:3108): fixed 384 wide, gap 15, первая плашка растянута на всю ширину
+.hero__points {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: u(15);
+  width: u(384);
+
+  @include tablet {
+    width: auto;
+    gap: u(12);
+  }
+
+  @include mobile {
+    width: u(222);
+    gap: u(8);
+  }
+}
+
+.hero__point--wide {
+  align-self: stretch;
+
+  @include tablet {
+    align-self: auto;
+  }
+}
+
+// Tablet: плашки 30 / 100% / -3%, каждая по своей ширине
+.hero__point {
+  @include tablet {
+    font-size: u(30);
+    line-height: 1;
+  }
+}
+
+// mask (2:3799 / 11:1884): линза-маска из Figma, на mobile — своя форма
+.hero__lane {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: u(580);
+  height: u(420);
+  -webkit-mask: url('../assets/hero-mask.svg') 0 0 / 100% 100% no-repeat;
+  mask: url('../assets/hero-mask.svg') 0 0 / 100% 100% no-repeat;
+
+  // Tablet: та же маска 1920×420, выровненная по центру экрана
+  @include tablet {
+    -webkit-mask-size: u(1920) 100%;
+    mask-size: u(1920) 100%;
+    -webkit-mask-position: center top;
+    mask-position: center top;
+  }
+
+  @include mobile {
+    -webkit-mask-image: url('../assets/hero-mask-mobile.svg');
+    mask-image: url('../assets/hero-mask-mobile.svg');
+    top: u(450);
+    height: u(252);
+  }
+}
+
+// images (1:3780): ряд 415×420, gap 20. Набор дублируется в JS, и трек
+// бесконечно едет на ширину одного набора — как лента на gastrodvorr.
+.hero__track {
+  --hero-gap: #{u(20)};
+  display: flex;
+  gap: var(--hero-gap);
+  width: max-content;
+  height: 100%;
+  animation: hero-lane var(--hero-duration, 60s) linear infinite;
+  will-change: transform;
+
+  @include mobile {
+    --hero-gap: #{u(12)};
+  }
+}
+
+.hero__img {
+  flex: none;
+  width: u(415);
+  height: 100%;
+  object-fit: cover;
+
+  @include mobile {
+    width: u(249);
+  }
+}
+
+.hero.is-offscreen .hero__track {
+  animation-play-state: paused;
+}
+
+@keyframes hero-lane {
+  to {
+    transform: translate3d(var(--hero-shift, -50%), 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__track {
+    animation: none;
+  }
+}

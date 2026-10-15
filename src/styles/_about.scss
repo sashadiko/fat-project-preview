@@ -1,0 +1,265 @@
+@use 'tokens' as *;
+
+// Figma desktop: about (2:3807) — numbers x100 / text x975, y 1220 (220 от hero).
+// Mobile (21:3392): колонка 327, сначала текст, потом цифры. Tablet (1:929): текст, пункты, цифры в 2 колонки.
+.about {
+  isolation: isolate;
+  position: relative;
+  display: grid;
+  grid-template-columns: u(740) u(845);
+  justify-content: space-between;
+  align-items: start;
+  padding: u(220) var(--gutter) 0;
+
+  @include tablet {
+    display: block;
+    padding-top: u(47);
+  }
+
+  @include mobile {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: u(64);
+    padding-top: u(80);
+  }
+}
+
+// oblect-bg (2:3800): звезда 1200×1200, x −294 / y −256 внутри кадра 1920×960, который режет её сверху
+.about__bg {
+  position: absolute;
+  z-index: -1;
+  top: u(-256);
+  left: u(-294);
+  width: u(1200);
+  height: u(1200);
+  max-width: none;
+  clip-path: inset(u(256) 0 0 0);
+  pointer-events: none;
+
+  @include below-desktop {
+    display: none;
+  }
+}
+
+.about__text {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+
+  @include mobile {
+    order: 0;
+  }
+}
+
+// desktop/H2: 64 / 110% / -4%. Tablet: 34 / 100% / -5%, ширина 439. Mobile: 30 / 110% / -5%
+.about__title {
+  font-size: u(64);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+
+  @include tablet {
+    max-width: u(439);
+    font-size: u(34);
+    line-height: 1;
+    letter-spacing: -0.05em;
+  }
+
+  @include mobile {
+    font-size: u(30);
+    letter-spacing: -0.05em;
+  }
+}
+
+.accent {
+  color: var(--c-green);
+}
+
+// desktop/Text3: 22 / 120% / -4%, Text/Gray, max 600. Tablet: 22 / 110%, #A5B7A9, 585. Mobile: 14 / 120%
+.about__lead {
+  max-width: u(600);
+  margin-top: u(30);
+  color: var(--c-gray);
+  font-size: u(22);
+  line-height: 1.2;
+  letter-spacing: -0.04em;
+
+  @include tablet {
+    max-width: u(585);
+    margin-top: u(24);
+    color: #a5b7a9;
+    line-height: 1.1;
+  }
+
+  @include mobile {
+    margin-top: u(16);
+    font-size: u(14);
+  }
+}
+
+// points (1:3278): row, gap 70, wrap; пункт — иконка 60 + 25 + текст (desktop/Text2, lower), выравнивание по низу
+.about__points {
+  display: flex;
+  flex-wrap: wrap;
+  gap: u(70);
+  margin-top: u(80);
+
+  @include tablet {
+    gap: u(30);
+    margin-top: u(48);
+  }
+
+  @include mobile {
+    flex-wrap: nowrap;
+    gap: u(8);
+    margin-top: u(32);
+  }
+}
+
+.about__point {
+  display: flex;
+  align-items: flex-end;
+  gap: u(25);
+
+  img {
+    flex: none;
+    width: u(60);
+    height: u(60);
+  }
+
+  span {
+    font-size: u(28);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    text-transform: lowercase;
+  }
+
+  &:nth-child(1) span {
+    width: u(280);
+  }
+
+  &:nth-child(2) span {
+    width: u(320);
+  }
+
+  // Tablet: иконка 60, текст 24 Regular / 120% / -2%, #FEFFFC
+  @include tablet {
+    align-items: center;
+
+    span {
+      color: var(--c-heading);
+      font-size: u(24);
+      font-weight: 400;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      text-transform: none;
+    }
+
+    &:nth-child(1) span {
+      width: u(237);
+    }
+
+    &:nth-child(2) span {
+      width: u(271);
+    }
+  }
+
+  // Mobile: колонка, иконка 40, gap 12, mobile/Text2 16 / 120% / -3%, текст 140
+  @include mobile {
+    flex: 1 1 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: u(12);
+
+    img {
+      width: u(40);
+      height: u(40);
+    }
+
+    // текст фиксированной ширины 140 — в три строки, как в макете
+    span,
+    &:nth-child(1) span,
+    &:nth-child(2) span {
+      width: u(140);
+      color: var(--c-heading);
+      font-size: u(16);
+      line-height: 1.2;
+    }
+  }
+}
+
+// numbers (1:3252): 2×2, gap 100 / 80
+.about__numbers {
+  grid-column: 1;
+  grid-row: 1;
+  display: grid;
+  grid-template-columns: repeat(2, u(320));
+  column-gap: u(100);
+  row-gap: u(80);
+
+  @include tablet {
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: u(18);
+    // В Figma рамки по 150 с шагом 220; подпись в 2 строки выходит за рамку на 6px
+    row-gap: u(64);
+    margin-top: u(117);
+  }
+
+  @include mobile {
+    order: 1;
+    grid-template-columns: 1fr;
+    row-gap: u(24);
+  }
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: u(10);
+
+  @include tablet {
+    align-items: center;
+    text-align: center;
+  }
+}
+
+// number: высота 80, desktop/Numbers1 80 / 100% / −6%; mobile 50
+.stat__value {
+  --tag-ls: 0.06em;
+  height: u(80);
+  font-size: u(80);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.06em;
+
+  @include mobile {
+    height: u(50);
+    font-size: u(50);
+  }
+}
+
+// desktop/Text2 lower, 320; tablet 30 / 110% / −3%, по центру; mobile/Text2 16
+.stat__label {
+  width: u(320);
+  font-size: u(28);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  text-transform: lowercase;
+
+  @include tablet {
+    width: 100%;
+    font-size: u(30);
+    text-transform: none;
+  }
+
+  @include mobile {
+    width: 100%;
+    font-size: u(16);
+    line-height: 1.2;
+  }
+}

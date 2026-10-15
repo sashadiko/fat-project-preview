@@ -1,0 +1,211 @@
+@use 'tokens' as *;
+
+// Figma: header (instance 21:3289), 1920×100, навигация по центру, top 15.
+// Tablet (11:1792): 100 высотой, logo 88×40 + бургер 32. Mobile (13:2512): 56, logo 70×32 + бургер 24.
+.header {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 40;
+  height: u(100);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: u(15);
+
+  @include below-desktop {
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 var(--gutter);
+  }
+
+  // Пока меню открыто, шапка с крестиком остаётся над ним
+  .menu-open & {
+    position: fixed;
+  }
+
+  @include mobile {
+    height: u(56);
+  }
+}
+
+.header__nav {
+  display: flex;
+  align-items: center;
+  gap: u(40);
+  height: u(70);
+
+  @include below-desktop {
+    height: auto;
+  }
+}
+
+.header__links {
+  display: flex;
+  align-items: center;
+  gap: u(40);
+
+  // desktop/Navigation2: Inter 16 / 80% / -4% (на узком desktop не мельче 13px)
+  font-size: max(13px, #{u(16)});
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+
+  // Ширину ссылки задаёт обычное (прозрачное) начертание, а видимый текст — копия поверх,
+  // которая при наведении плавно становится жирной и расширяется от центра, не сдвигая соседей
+  a {
+    position: relative;
+    display: inline-block;
+    padding: u(6) 0;
+    color: transparent;
+
+    &::after {
+      content: attr(data-text);
+      position: absolute;
+      top: u(6);
+      left: 50%;
+      translate: -50% 0;
+      color: var(--c-white);
+      white-space: nowrap;
+      font-weight: 400;
+      transition: font-weight 0.4s var(--ease);
+    }
+
+    @media (hover: hover) {
+      &:hover::after {
+        font-weight: 700;
+      }
+    }
+
+    &:focus-visible::after {
+      font-weight: 700;
+    }
+  }
+
+  @include below-desktop {
+    display: none;
+  }
+}
+
+.header__logo {
+  display: block;
+  width: u(154);
+  height: u(70);
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+
+  @include tablet {
+    width: u(88);
+    height: u(40);
+  }
+
+  @include mobile {
+    width: u(70);
+    height: u(32);
+  }
+}
+
+// burger (31:3970): зелёный квадрат, три полоски цвета Main/Black; в открытом состоянии — крест
+.burger {
+  --size: #{u(32)};
+  --bar: #{u(16)};
+  --step: #{u(7)};
+  position: relative;
+  display: none;
+  width: var(--size);
+  height: var(--size);
+  background: var(--c-green);
+
+  @include below-desktop {
+    display: block;
+  }
+
+  @include mobile {
+    --size: #{u(24)};
+    --bar: #{u(12)};
+    --step: #{u(5)};
+  }
+}
+
+.burger__bar {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--bar);
+  height: 2px;
+  margin: -1px 0 0 calc(var(--bar) / -2);
+  background: var(--c-bg);
+  transition:
+    transform 0.5s var(--ease),
+    opacity 0.3s var(--ease);
+
+  &:nth-child(1) {
+    transform: translateY(calc(var(--step) * -1));
+  }
+
+  &:nth-child(3) {
+    transform: translateY(var(--step));
+  }
+}
+
+.burger[aria-expanded='true'] .burger__bar {
+  &:nth-child(1) {
+    transform: rotate(-45deg) scaleX(1.25);
+  }
+
+  &:nth-child(2) {
+    opacity: 0;
+  }
+
+  &:nth-child(3) {
+    transform: rotate(-135deg) scaleX(1.25);
+  }
+}
+
+// Меню (Frame 133, 31:4078): полный экран, gradient/cover, список с x 24 / y 189
+.menu {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  background: var(--g-cover);
+  padding: u(189) var(--gutter) 0;
+
+  &[hidden] {
+    display: none;
+  }
+
+  @include tablet {
+    padding-top: u(220);
+  }
+}
+
+.menu__list {
+  display: flex;
+  flex-direction: column;
+  gap: u(16);
+  max-width: u(295);
+  padding-bottom: u(16);
+  border-bottom: 1px solid var(--c-green);
+
+  @include tablet {
+    max-width: u(400);
+  }
+}
+
+// sector: линия 1px Main/Green, gap 24, пункт mobile/Numbers2 — 28 / 85% / -2%, UPPER
+.menu__item {
+  display: block;
+  padding-top: u(24);
+  border-top: 1px solid var(--c-green);
+  overflow: hidden;
+  font-size: u(28);
+  font-weight: 600;
+  line-height: 0.85;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+
+  span {
+    display: block;
+  }
+}

@@ -1,0 +1,7 @@
+node_modules
+dist
+.playwright-cli
+.DS_Store
+
+# архив сборки для ручной загрузки на хостинг
+fatproject-site.zip

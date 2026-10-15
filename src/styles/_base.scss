@@ -1,0 +1,126 @@
+@use 'tokens' as *;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: var(--c-bg);
+  color: var(--c-white);
+  font-family: var(--font);
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+}
+
+h1,
+h2,
+h3,
+p,
+ul,
+figure {
+  margin: 0;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+:focus-visible {
+  outline: 2px solid var(--c-green);
+  outline-offset: 4px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+// Зелёная плашка с тёмным текстом (number / points / button в Figma)
+// Браузер добавляет letter-spacing и после последней буквы, Figma — нет. Отрицательный трекинг
+// «съедает» правый отступ, поэтому возвращаем его через --tag-ls (= модуль letter-spacing).
+.tag {
+  --tag-ls: 0em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 calc(#{u(6)} + var(--tag-ls)) 0 u(6);
+  background: var(--c-green);
+  color: var(--c-bg);
+  white-space: nowrap;
+}
+
+// desktop/Text2 · mobile/Text2
+.tag--hero {
+  --tag-ls: 0.03em;
+  font-size: u(28);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  text-transform: lowercase;
+
+  @include mobile {
+    font-size: u(16);
+    line-height: 1.2;
+  }
+}
+
+// Маска строк для построчного reveal (SplitText): запас снизу под выносные элементы букв,
+// компенсированный отрицательным отступом маски — высота текста остаётся как в Figma
+.reveal-line {
+  padding-bottom: 0.12em;
+}
+
+.reveal-line-mask {
+  margin-bottom: -0.12em;
+}
+
+// flow-root удерживает отрицательный отступ последней строки внутри блока
+[data-reveal='lines'],
+[data-intro='title'] {
+  display: flow-root;
+}

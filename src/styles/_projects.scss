@@ -1,0 +1,297 @@
+@use 'tokens' as *;
+
+// Figma desktop: projects (15:2754) — y 3413, «Наши работы» 64 по центру, gap 60; карточки 1720 × 720, gap 80;
+// кнопка «смотреть другие кейсы» по центру через 80. Mobile (13:2409): заголовок 34 слева, gap 40,
+// карточка = текст 320 + фото 320, gap 32; кнопка на всю ширину через 32.
+.projects {
+  padding: 0 var(--gutter);
+}
+
+// desktop/H2 64 / 110% / −4%, center; mobile 34 / 110% / −5%, left
+.projects__title {
+  font-size: u(64);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  text-align: center;
+
+  @include tablet {
+    font-size: u(48);
+  }
+
+  @include mobile {
+    font-size: u(34);
+    letter-spacing: -0.05em;
+    text-align: left;
+  }
+}
+
+.projects__stack {
+  --case-h: #{u(720)};
+  --case-gap: #{u(80)};
+  display: flex;
+  flex-direction: column;
+  gap: var(--case-gap);
+  margin-top: u(60);
+
+  @include tablet {
+    --case-h: #{u(480)};
+    --case-gap: #{u(48)};
+    margin-top: u(48);
+  }
+
+  @include mobile {
+    --case-h: #{u(640)};
+    --case-gap: #{u(32)};
+    margin-top: u(40);
+  }
+}
+
+// Карточка липнет к экрану: по центру, если помещается; если выше окна — так, чтобы был виден низ
+.case {
+  position: sticky;
+  top: min(max(calc((100svh - var(--case-h)) / 2), 24px), calc(100svh - var(--case-h) - 24px));
+  height: var(--case-h);
+
+  // Без анимаций — обычная колонка карточек
+  @media (prefers-reduced-motion: reduce) {
+    position: relative;
+    top: auto;
+  }
+}
+
+.case__inner {
+  position: relative;
+  display: flex;
+  height: 100%;
+  transform-origin: 50% 0;
+
+  .case--reverse & {
+    flex-direction: row-reverse;
+  }
+
+  @include mobile {
+    flex-direction: column;
+
+    .case--reverse & {
+      flex-direction: column;
+    }
+  }
+}
+
+// case-text (11:1995): 860 × 720, Main/Dark-gray, padding 80 / 60, тип сверху, остальное прижато вниз
+.case__text {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 50%;
+  padding: u(80) u(60);
+  background: var(--c-surface);
+
+  @include tablet {
+    padding: u(40) u(32);
+  }
+
+  @include mobile {
+    width: 100%;
+    height: u(320);
+    padding: u(36) u(24);
+  }
+}
+
+// desktop/Descriptor 22 / 110% / −4%; mobile/Descriptor 14
+.case__type {
+  font-size: u(22);
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+
+  @include tablet {
+    font-size: u(16);
+  }
+
+  @include mobile {
+    font-size: u(14);
+  }
+}
+
+.case__bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+// desktop/H4 46 / 110% / −3%; mobile/H4 25 / 110% / −3%, блок name шириной 240
+.case__name {
+  font-size: u(46);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+
+  @include tablet {
+    font-size: u(32);
+  }
+
+  @include mobile {
+    max-width: u(240);
+    font-size: u(25);
+  }
+}
+
+// desktop/Text1 30 Medium / 120% / −3%, gap 20; mobile/Text1 16, gap 16
+.case__location {
+  margin-top: u(20);
+  font-size: u(30);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+
+  @include tablet {
+    margin-top: u(16);
+    font-size: u(20);
+  }
+
+  @include mobile {
+    margin-top: u(16);
+    font-size: u(16);
+  }
+}
+
+.case__btn {
+  margin-top: u(60);
+
+  @include below-desktop {
+    margin-top: u(24);
+  }
+}
+
+.case__media {
+  position: relative;
+  flex: 1 1 0;
+  overflow: hidden;
+
+  @include mobile {
+    flex: none;
+    height: u(320);
+  }
+}
+
+.case__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(var(--case-zoom, 1));
+  transform-origin: 50% 50%;
+}
+
+// Второе фото: мягкий crossfade поверх первого, контейнер не двигается
+.case__img--alt {
+  opacity: 0;
+  transition: opacity 0.7s var(--ease-out);
+}
+
+// Только для устройств с курсором; на touch (mobile/tablet) фото не переключается
+@media (hover: hover) {
+  .case__media:hover .case__img--alt,
+  .case:focus-within .case__img--alt {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .case__img--alt {
+    transition-duration: 0.01s;
+  }
+}
+
+.projects__more {
+  display: flex;
+  justify-content: center;
+  margin-top: u(80);
+
+  @include mobile {
+    display: block;
+    margin-top: u(32);
+  }
+}
+
+// button (13:2181): зелёная плашка, текст Bold lower, стрелка ↗
+.btn {
+  display: inline-flex;
+  align-items: center;
+  background: var(--c-green);
+  color: var(--c-bg);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  text-transform: lowercase;
+  white-space: nowrap;
+  transition: background-color 0.4s var(--ease);
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--c-heading);
+    }
+
+    &:hover .btn__icon {
+      transform: translate(2px, -2px);
+    }
+  }
+}
+
+.btn__icon {
+  flex: none;
+  transition: transform 0.4s var(--ease);
+}
+
+// size=small desktop: padding 4 / 8, текст 22 (desktop/Numbers2), gap 8, стрелка 16; mobile: 4 / 6, 16, gap 6, стрелка 12
+.btn--small {
+  gap: u(8);
+  padding: u(4) u(8);
+  font-size: u(22);
+
+  .btn__icon {
+    width: u(16);
+    height: u(16);
+  }
+
+  @include mobile {
+    gap: u(6);
+    padding: u(4) u(6);
+    font-size: u(16);
+
+    .btn__icon {
+      width: u(12);
+      height: u(12);
+    }
+  }
+}
+
+// size=big desktop: высота 50, padding 6 / 10, текст 35 (desktop/Numbers1), gap 10, стрелка 30;
+// mobile: на всю ширину, 4 / 6, текст 22, стрелка 16 справа
+.btn--big {
+  gap: u(10);
+  height: u(50);
+  padding: u(6) u(10);
+  font-size: u(35);
+
+  .btn__icon {
+    width: u(30);
+    height: u(30);
+  }
+
+  @include mobile {
+    justify-content: space-between;
+    width: 100%;
+    height: auto;
+    padding: u(4) u(6);
+    font-size: u(22);
+
+    .btn__icon {
+      width: u(16);
+      height: u(16);
+    }
+  }
+}

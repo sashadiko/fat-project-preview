@@ -1,0 +1,71 @@
+@use 'tokens' as *;
+
+// Figma desktop: text (31:3709) — полоса 6264 × 97, повёрнута на 2° против часовой, центр по горизонтали,
+// стоит посередине промежутка 516 между manufacture и projects. Mobile (31:3730): 42px, промежуток 248.
+.ticker {
+  position: relative;
+  height: u(516);
+  overflow: hidden;
+
+  @include tablet {
+    height: u(360);
+  }
+
+  @include mobile {
+    height: u(248);
+  }
+}
+
+.ticker__band {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120vw;
+  translate: -50% -50%;
+  rotate: -2deg;
+}
+
+.ticker__track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+// Набор: слова + звёзды, gap 30; хвостовой отступ 30 — стык с повтором без шва
+.ticker__set {
+  display: flex;
+  align-items: center;
+  gap: u(30);
+  padding-right: u(30);
+
+  // desktop/H1: 88 / 110% / −4%, UPPER, белый
+  span {
+    font-size: u(88);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    // Figma не считает трекинг после последней буквы — возвращаем его, чтобы шаг совпал с макетом
+    margin-right: 0.04em;
+  }
+
+  img {
+    flex: none;
+    width: u(30);
+    height: u(30);
+  }
+
+  @include tablet {
+    span {
+      font-size: u(64);
+    }
+  }
+
+  // mobile/H1: 42 / 110% / −4%
+  @include mobile {
+    span {
+      font-size: u(42);
+    }
+  }
+}

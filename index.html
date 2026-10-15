@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FAT PROJECT — декорации и элементы оформления</title>
+    <meta
+      name="description"
+      content="FAT PROJECT — команда, которая реализует проекты в сфере производства конструкций и реквизита. Собственное производство, любая сложность."
+    />
+    <meta name="theme-color" content="#1E232A" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preload" as="image" type="image/webp" href="/img/hero/hero-1.webp" />
+    <style>
+      /* Критичные стартовые состояния — до загрузки основного CSS, чтобы ничего не мигало */
+      html { background: #1e232a; }
+      html.js:not(.css-ready) body { opacity: 0; }
+      @media (prefers-reduced-motion: no-preference) {
+        html.js:not(.is-ready) [data-intro],
+        html.js:not(.reveal-ready) [data-reveal='lines'],
+        html.js:not(.reveal-ready) [data-reveal='up'],
+        html.js:not(.reveal-ready) [data-reveal-item] { opacity: 0; }
+      }
+    </style>
+    <script>
+      document.documentElement.classList.add('js');
+      // Страховка: если скрипты не загрузились, через 4 с показываем всё как есть
+      setTimeout(function () {
+        document.documentElement.classList.add('css-ready', 'is-ready', 'reveal-ready');
+      }, 4000);
+    </script>
+    <script type="module" src="/src/main.ts"></script>
+  </head>
+  <body>
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <symbol id="i-arrow-small" viewBox="0 0 22 22"><path d="M13.6055 5H0V0h22v22h-5V8.3955L3.3272 22.0684-.0674 18.673 13.6055 5Z" fill="currentColor" /></symbol>
+      <symbol id="i-mail" viewBox="0 0 30 30"><path d="M0 27.5h30v-25H0v25Zm26-19.064V23.5H4V8.437l11 9.167 11-9.168ZM22.076 6.5 15 12.397 7.924 6.5h14.152Z" fill="currentColor" /></symbol>
+      <symbol id="i-copy" viewBox="0 0 30 30"><rect x="12" y="10" width="14" height="18" fill="#A8DF8F" stroke="currentColor" stroke-width="4" /><rect x="4" y="2" width="14" height="18" fill="#A8DF8F" stroke="currentColor" stroke-width="4" /></symbol>
+      <symbol id="i-arrow-big" viewBox="0 0 30 30"><path d="M2.5 27.5 27.5 2.5" stroke="currentColor" stroke-width="5" fill="none" /><path d="M0 0h30v5H0zM25 0h5v30h-5z" fill="currentColor" /></symbol>
+    </svg>
+
+    <header class="header" data-intro="nav">
+      <nav class="header__nav" aria-label="Основная навигация">
+        <ul class="header__links">
+          <li><a href="#about" data-text="О нас">О нас</a></li>
+          <li><a href="#manufacture" data-text="Производство">Производство</a></li>
+        </ul>
+        <a class="header__logo" href="#top" aria-label="FAT PROJECT — на главную">
+          <img src="/src/assets/logo-small.svg" width="154" height="70" alt="FAT PROJECT" />
+        </a>
+        <ul class="header__links">
+          <li><a href="#projects" data-text="Портфолио">Портфолио</a></li>
+          <li><a href="#contacts" data-text="Контакты">Контакты</a></li>
+        </ul>
+      </nav>
+      <button class="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="menu" data-menu-toggle>
+        <span class="burger__bar"></span>
+        <span class="burger__bar"></span>
+        <span class="burger__bar"></span>
+      </button>
+    </header>
+
+    <div class="menu" id="menu" hidden data-menu>
+      <nav class="menu__list" aria-label="Меню">
+        <a class="menu__item" href="#about"><span>О нас</span></a>
+        <a class="menu__item" href="#manufacture"><span>Производство</span></a>
+        <a class="menu__item" href="#projects"><span>Портфолио</span></a>
+        <a class="menu__item" href="#contacts"><span>Контакты</span></a>
+      </nav>
+    </div>
+
+    <main>
+      <section class="hero" id="top">
+        <div class="hero__text">
+          <h1 class="hero__title" data-intro="title">Декорации<br />и элементы оформления</h1>
+          <div class="hero__points">
+            <span class="tag tag--hero hero__point hero__point--wide" data-intro="point">Собственное производство</span>
+            <span class="tag tag--hero hero__point" data-intro="point">Любая сложность</span>
+          </div>
+        </div>
+
+        <div class="hero__lane">
+          <div class="hero__track" data-hero-track>
+            <img class="hero__img" src="/img/hero/hero-1.webp" width="415" height="420" alt="Входная арка BEAT FILM FESTIVAL" />
+            <img class="hero__img" src="/img/hero/hero-2.webp" width="415" height="420" alt="Бар MARTINI в красном оформлении" />
+            <img class="hero__img" src="/img/hero/hero-3.webp" width="415" height="420" alt="Витражные окна для съёмок фильма" />
+            <img class="hero__img" src="/img/hero/hero-4.webp" width="415" height="420" alt="Арка из теннисных мячей на Падел Фесте в Лужниках" />
+            <img class="hero__img" src="/img/hero/hero-5.webp" width="415" height="420" alt="Монтаж сцены Moscow Jazz Festival" />
+            <img class="hero__img" src="/img/hero/hero-6.webp" width="415" height="420" alt="" />
+            <img class="hero__img" src="/img/hero/hero-7.webp" width="415" height="420" alt="" />
+            <img class="hero__img" src="/img/hero/hero-8.webp" width="415" height="420" alt="" />
+          </div>
+        </div>
+      </section>
+
+      <section class="about" id="about" aria-label="О компании">
+        <img class="about__bg" src="/src/assets/bg-asterisk.svg" alt="" aria-hidden="true" />
+
+        <div class="about__text">
+          <h2 class="about__title" data-reveal="lines">
+            <span class="accent">FAT PROJECT</span> - команда, которая реализует проекты в сфере производства конструкций и реквизита
+          </h2>
+          <p class="about__lead" data-reveal="lines">
+            Мы помогаем брендам выделяться через продуманные визуальные решения и качественную реализацию от идеи до финального результата
+          </p>
+          <ul class="about__points" data-reveal-group>
+            <li class="about__point" data-reveal-item>
+              <img src="/src/assets/icon-spiral.svg" width="60" height="60" alt="" aria-hidden="true" />
+              <span>контроль качества на каждом этапе</span>
+            </li>
+            <li class="about__point" data-reveal-item>
+              <img src="/src/assets/icon-bang.svg" width="60" height="60" alt="" aria-hidden="true" />
+              <span>опыт работы с крупными клиентами</span>
+            </li>
+          </ul>
+        </div>
+
+        <ul class="about__numbers" data-reveal-group>
+          <li class="stat" data-reveal-item>
+            <span class="tag stat__value" data-counter="250" data-suffix="+">250+</span>
+            <span class="stat__label">реализованных проектов</span>
+          </li>
+          <li class="stat" data-reveal-item>
+            <span class="tag stat__value" data-counter="6" data-suffix="+">6+</span>
+            <span class="stat__label">лет на рынке</span>
+          </li>
+          <li class="stat" data-reveal-item>
+            <span class="tag stat__value" data-counter="500" data-suffix="+">500+</span>
+            <span class="stat__label">квадратных метров производств</span>
+          </li>
+          <li class="stat" data-reveal-item>
+            <span class="tag stat__value" data-counter="80" data-suffix="%">80%</span>
+            <span class="stat__label">клиентов возвращаются</span>
+          </li>
+        </ul>
+      </section>
+
+      <section class="manufacture" id="manufacture" aria-labelledby="manufacture-title">
+        <h2 class="manufacture__title" id="manufacture-title" data-reveal="lines">
+          Мы реализуем проекты на <span class="accent">собственной производственной базе</span>, что позволяет контролировать качество, сроки и точность исполнения на каждом этапе
+        </h2>
+
+        <div class="manufacture__stage" data-shops-stage>
+        <div class="manufacture__track" data-shops data-reveal-group>
+          <article class="shop" data-reveal-item>
+            <div class="shop__inner">
+              <img class="shop__img" src="/img/manufacture/shop-1.webp" width="553" height="342" alt="Сварочный цех: рабочие места и металлоконструкции" loading="lazy" />
+              <h3 class="shop__name">Сварочный цех</h3>
+              <div class="shop__body">
+                <p>Изготовление металлоконструкций с применением полуавтоматической сварки.</p>
+                <div class="shop__caps">
+                  <h4>Возможности</h4>
+                  <p>подготовка заготовок, сборка узлов, сварка MIG/MAG, контроль качества соединений.</p>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="shop" data-reveal-item>
+            <div class="shop__inner">
+              <img class="shop__img" src="/img/manufacture/shop-2.webp" width="553" height="342" alt="Фрезерный станок с ЧПУ WoodTec HA-2030C" loading="lazy" />
+              <h3 class="shop__name">Фрезерный цех с ЧПУ</h3>
+              <div class="shop__body">
+                <p>Высокоточная обработка листовых и объёмных материалов на станках с ЧПУ.</p>
+                <div class="shop__caps">
+                  <h4>Возможности</h4>
+                  <p>фрезеровка сложных форм, раскрой, гравировка, сверление и зенковка, финишная обработка, контроль геометрии.</p>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="shop" data-reveal-item>
+            <div class="shop__inner">
+              <img class="shop__img" src="/img/manufacture/shop-3.webp" width="553" height="342" alt="Сборочный цех: металлические каркасы конструкций" loading="lazy" />
+              <h3 class="shop__name">Сборочный цех</h3>
+              <div class="shop__body">
+                <p>Финальная подготовка изделий перед монтажом.</p>
+                <div class="shop__caps">
+                  <h4>Возможности</h4>
+                  <p>предварительная сборка конструкций, подгонка элементов, установка декоративных и световых деталей, проверка устойчивости, упаковка и подготовка к транспортировке.</p>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+        </div>
+      </section>
+
+      <section class="ticker" aria-label="Направления работы">
+        <p class="visually-hidden">Кино, телевидение, театр, концерты, фестивали, реквизит, рестораны, офисы, банкетные залы, фотостудии, витрины</p>
+        <div class="ticker__band" aria-hidden="true">
+          <div class="ticker__track" data-ticker>
+            <div class="ticker__set">
+              <span>кино</span><img src="/src/assets/star.svg" alt="" />
+              <span>телевидение</span><img src="/src/assets/star.svg" alt="" />
+              <span>театр</span><img src="/src/assets/star.svg" alt="" />
+              <span>концерты</span><img src="/src/assets/star.svg" alt="" />
+              <span>фестивали</span><img src="/src/assets/star.svg" alt="" />
+              <span>реквизит</span><img src="/src/assets/star.svg" alt="" />
+              <span>рестораны</span><img src="/src/assets/star.svg" alt="" />
+              <span>офисы</span><img src="/src/assets/star.svg" alt="" />
+              <span>банкетные залы</span><img src="/src/assets/star.svg" alt="" />
+              <span>фотостудии</span><img src="/src/assets/star.svg" alt="" />
+              <span>витрины</span><img src="/src/assets/star.svg" alt="" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="projects" id="projects" aria-labelledby="projects-title">
+        <h2 class="projects__title" id="projects-title" data-reveal="lines">Наши работы</h2>
+
+        <div class="projects__stack" data-cases>
+          <article class="case" data-case-card data-reveal="up">
+            <div class="case__inner">
+              <div class="case__text">
+                <p class="case__type">/ мероприятия</p>
+                <div class="case__bottom">
+                  <h3 class="case__name">Бар MARTINI. Оформление интерьера и экстерьера</h3>
+                  <p class="case__location">Пространство «Хлебозавод», ежегодный городской фестиваль «Чтиво Фест»</p>
+                  <button class="btn btn--small case__btn" type="button" data-case="martini">
+                    Изучить проект
+                    <svg class="btn__icon" aria-hidden="true"><use href="#i-arrow-small" /></svg>
+                  </button>
+                </div>
+              </div>
+              <div class="case__media" data-case-media>
+                <img class="case__img" src="/img/projects/martini-1-800.webp" srcset="/img/projects/martini-1-800.webp 800w, /img/projects/martini-1-1200.webp 1200w, /img/projects/martini-1-1600.webp 1600w" sizes="(min-width: 1200px) 45vw, (min-width: 768px) 50vw, 100vw" width="860" height="720" alt="Бар MARTINI в красном оформлении" loading="lazy" />
+                <img class="case__img case__img--alt" src="/img/projects/martini-2-800.webp" srcset="/img/projects/martini-2-800.webp 800w, /img/projects/martini-2-1200.webp 1200w, /img/projects/martini-2-1600.webp 1600w" sizes="(min-width: 1200px) 45vw, (min-width: 768px) 50vw, 100vw" width="860" height="720" alt="Вход в бар MARTINI с красным порталом" loading="lazy" />
+              </div>
+            </div>
+          </article>
+
+          <article class="case case--reverse" data-case-card>
+            <div class="case__inner">
+              <div class="case__text">
+                <p class="case__type">/ мероприятия</p>
+                <div class="case__bottom">
+                  <h3 class="case__name">Оформление пространства мероприятия Яндекс Пэй</h3>
+                  <p class="case__location">Территория завода «Кристалл»</p>
+                  <button class="btn btn--small case__btn" type="button" data-case="yandex-pay">
+                    Изучить проект
+                    <svg class="btn__icon" aria-hidden="true"><use href="#i-arrow-small" /></svg>
+                  </button>
+                </div>
+              </div>
+              <div class="case__media" data-case-media>
+                <img class="case__img" src="/img/projects/yandex-1-800.webp" srcset="/img/projects/yandex-1-800.webp 800w, /img/projects/yandex-1-1200.webp 1200w, /img/projects/yandex-1-1600.webp 1600w" sizes="(min-width: 1200px) 45vw, (min-width: 768px) 50vw, 100vw" width="860" height="720" alt="Стенд с расписанием BEAT FILM FESTIVAL" loading="lazy" />
+                <img class="case__img case__img--alt" src="/img/projects/yandex-2-800.webp" srcset="/img/projects/yandex-2-800.webp 800w, /img/projects/yandex-2-1200.webp 1200w, /img/projects/yandex-2-1600.webp 1600w" sizes="(min-width: 1200px) 45vw, (min-width: 768px) 50vw, 100vw" width="860" height="720" alt="Зал с экраном в оформлении мероприятия" loading="lazy" />
+              </div>
+            </div>
+          </article>
+
+          <article class="case" data-case-card>
+            <div class="case__inner">
+              <div class="case__text">
+                <p class="case__type">/ мероприятия</p>
+                <div class="case__bottom">
+                  <h3 class="case__name">Оформление мероприятия «Интервидение»</h3>
+                  <p class="case__location">Площадки Live Arena и Технопарк «Сколково»</p>
+                  <button class="btn btn--small case__btn" type="button" data-case="intervision">
+                    Изучить проект
+                    <svg class="btn__icon" aria-hidden="true"><use href="#i-arrow-small" /></svg>
+                  </button>
+                </div>
+              </div>
+              <div class="case__media" data-case-media>
+                <img class="case__img" src="/img/projects/intervision-1-800.webp" srcset="/img/projects/intervision-1-800.webp 800w, /img/projects/intervision-1-1200.webp 1200w, /img/projects/intervision-1-1600.webp 1600w" sizes="(min-width: 1200px) 45vw, (min-width: 768px) 50vw, 100vw" width="860" height="720" alt="Брендированная галерея арены «Интервидение»" loading="lazy" />
+                <img class="case__img case__img--alt" src="/img/projects/intervision-2-800.webp" srcset="/img/projects/intervision-2-800.webp 800w, /img/projects/intervision-2-1200.webp 1200w, /img/projects/intervision-2-1600.webp 1600w" sizes="(min-width: 1200px) 45vw, (min-width: 768px) 50vw, 100vw" width="860" height="720" alt="Пресс-зона «Интервидения» с оформленными стенами" loading="lazy" />
+              </div>
+            </div>
+          </article>
+
+          <article class="case case--reverse" data-case-card>
+            <div class="case__inner">
+              <div class="case__text">
+                <p class="case__type">/ кинопроизводство</p>
+                <div class="case__bottom">
+                  <h3 class="case__name">Витражные окна для съёмок художественного фильма</h3>
+                  <p class="case__location">Бутик-отель Mamaison, ул. Покровка, 40</p>
+                  <button class="btn btn--small case__btn" type="button" data-case="vitrazh">
+                    Изучить проект
+                    <svg class="btn__icon" aria-hidden="true"><use href="#i-arrow-small" /></svg>
+                  </button>
+                </div>
+              </div>
+              <div class="case__media" data-case-media>
+                <img class="case__img" src="/img/projects/vitrazh-1-800.webp" srcset="/img/projects/vitrazh-1-800.webp 800w, /img/projects/vitrazh-1-1200.webp 1200w, /img/projects/vitrazh-1-1600.webp 1600w" sizes="(min-width: 1200px) 45vw, (min-width: 768px) 50vw, 100vw" width="860" height="720" alt="Витражные окна с цветочным орнаментом в интерьере отеля" loading="lazy" />
+                <img class="case__img case__img--alt" src="/img/projects/vitrazh-2-800.webp" srcset="/img/projects/vitrazh-2-800.webp 800w, /img/projects/vitrazh-2-1200.webp 1200w, /img/projects/vitrazh-2-1600.webp 1600w" sizes="(min-width: 1200px) 45vw, (min-width: 768px) 50vw, 100vw" width="860" height="720" alt="Витражи на фасаде отеля Mamaison вечером" loading="lazy" />
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="projects__more" data-reveal="up">
+          <a class="btn btn--big" href="#projects">
+            Смотреть другие кейсы
+            <svg class="btn__icon" aria-hidden="true"><use href="#i-arrow-big" /></svg>
+          </a>
+        </div>
+      </section>
+
+      <section class="stages" aria-labelledby="stages-title">
+        <div class="stages__inner">
+          <img class="stages__bg" src="/src/assets/bg-burst.svg" alt="" aria-hidden="true" />
+          <div class="stages__aside">
+            <h2 class="stages__title" id="stages-title" data-reveal="lines">Этапы работы<br />над проектом</h2>
+          </div>
+          <ol class="stages__list">
+            <li class="stage" data-reveal="up">
+              <span class="tag stage__num">1</span>
+              <div class="stage__text">
+                <h3>Бриф и задачи</h3>
+                <p>Погружаемся в проект, уточняем цели, формат и требования</p>
+              </div>
+            </li>
+            <li class="stage" data-reveal="up">
+              <span class="tag stage__num">2</span>
+              <div class="stage__text">
+                <h3>Концепция и расчёт</h3>
+                <p>Предлагаем решение, подбираем материалы и просчитываем реализацию</p>
+              </div>
+            </li>
+            <li class="stage" data-reveal="up">
+              <span class="tag stage__num">3</span>
+              <div class="stage__text">
+                <h3>Производство</h3>
+                <p>Изготавливаем все элементы на собственной производственной базе</p>
+              </div>
+            </li>
+            <li class="stage" data-reveal="up">
+              <span class="tag stage__num">4</span>
+              <div class="stage__text">
+                <h3>Доставка и монтаж</h3>
+                <p>Организуем логистику и устанавливаем конструкции на площадке</p>
+              </div>
+            </li>
+            <li class="stage" data-reveal="up">
+              <span class="tag stage__num">5</span>
+              <div class="stage__text">
+                <h3>Демонтаж и утилизация</h3>
+                <p>Демонтаж конструкций и вывоз материалов после мероприятия</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer" id="contacts">
+      <div class="footer__inner">
+        <div class="footer__left">
+          <div class="footer__intro">
+            <h2 class="footer__title" data-reveal="lines">Будем рады сотрудничеству</h2>
+            <p class="footer__lead" data-reveal="lines">Свяжитесь с нами удобным способом, чтобы обсудить задачу. Мы предложим решение под Ваш формат, сроки и бюджет</p>
+          </div>
+          <div class="footer__brand" data-reveal="up">
+            <img class="footer__logo" src="/src/assets/logo-big.svg" width="220" height="100" alt="FAT PROJECT" loading="lazy" />
+            <img class="footer__logo-mobile" src="/src/assets/logo-small.svg" width="154" height="70" alt="FAT PROJECT" loading="lazy" />
+            <p class="footer__legal">ИП Иванов Иван Иванович<br />ИНН 123456789012<br />ОГРНИП 123456789012345</p>
+          </div>
+        </div>
+
+        <ul class="footer__contacts" data-reveal-group>
+          <li class="contact" data-reveal-item>
+            <span class="contact__label">Михаил</span>
+            <a class="contact__value contact__value--phone" href="tel:+79099015014" data-copy="+7(909)901-50-14">
+              +7(909)901-50-14
+              <span class="contact__action contact__action--copy" aria-hidden="true">
+                <span class="contact__action-text" data-copy-label>копировать</span>
+                <svg width="30" height="30"><use href="#i-copy" /></svg>
+              </span>
+            </a>
+          </li>
+          <li class="contact" data-reveal-item>
+            <span class="contact__label">Андрей</span>
+            <a class="contact__value contact__value--phone" href="tel:+79267023214" data-copy="+7(926)702-32-14">
+              +7(926)702-32-14
+              <span class="contact__action contact__action--copy" aria-hidden="true">
+                <span class="contact__action-text" data-copy-label>копировать</span>
+                <svg width="30" height="30"><use href="#i-copy" /></svg>
+              </span>
+            </a>
+          </li>
+          <li class="contact contact--email" data-reveal-item>
+            <span class="contact__label">электронная почта:</span>
+            <a class="contact__value contact__value--email" href="mailto:fatproject@rambler.ru">
+              fatproject @rambler.ru
+              <span class="contact__action contact__action--mail" aria-hidden="true">
+                <span class="contact__action-text">написать</span>
+                <svg width="30" height="30"><use href="#i-mail" /></svg>
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <p class="visually-hidden" role="status" aria-live="polite" data-copy-status></p>
+    </footer>
+  </body>
+</html>
