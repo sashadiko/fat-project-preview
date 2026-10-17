@@ -1,0 +1,319 @@
+@use 'tokens' as *;
+
+// Figma: example (170:1672) + popup (167:1331). Поверх страницы — Main/Black 70% с размытием 20;
+// панель 1720 (отступ 100 от краёв окна), Main/Dark-gray, padding-top 80, колонка gap 60 по центру:
+// шапка 800 → фото 1720 × 560 → текст 660 → ряд фото 620 высотой → …; exit 40 × 40 в углу (30 / 30).
+// Адаптивов в макете нет: на tablet пропорционально мельче, на mobile попап на весь экран.
+
+// Страница под попапом не скроллится
+.popup-open {
+  overflow: hidden;
+}
+
+.popup {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: u(100);
+  border: 0;
+  background: rgb(30 35 42 / 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: var(--c-white);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+
+  // Затемнение и размытие — на самом dialog, чтобы проявлялись вместе с ним
+  &::backdrop {
+    background: transparent;
+  }
+
+  @include tablet {
+    padding: u(40) var(--gutter);
+  }
+
+  @include mobile {
+    padding: 0;
+  }
+}
+
+.popup__panel {
+  position: relative;
+  max-width: u(1720);
+  margin: 0 auto;
+  background: var(--c-surface);
+
+  @include mobile {
+    min-height: 100%;
+  }
+}
+
+// Кнопка exit прилипает к верху окна, пока листается попап: обёртка нулевой высоты sticky,
+// сама кнопка — с отступом 30 от верха и правого края панели, как в макете.
+// Sticky считается от края содержимого dialog (внутри его padding), поэтому top = −padding:
+// так при прокрутке кнопка встаёт в 30 от верха окна
+.popup__bar {
+  position: sticky;
+  top: u(-100);
+  z-index: 2;
+  display: flex;
+  justify-content: flex-end;
+  height: 0;
+
+  @include tablet {
+    top: u(-40);
+  }
+
+  @include mobile {
+    top: 0;
+  }
+}
+
+// exit (167:1380): Main/Green 40 × 40, крест Main/Black 20, тень Main/Black 187.5
+.popup__exit {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: u(40);
+  height: u(40);
+  margin: u(30) u(30) 0 0;
+  background: var(--c-green);
+  box-shadow: 0 0 u(187.5) var(--c-bg);
+  color: var(--c-bg);
+  transition: background-color 0.4s var(--ease);
+
+  svg {
+    width: u(20);
+    height: u(20);
+    transition: transform 0.5s var(--ease);
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--c-heading);
+    }
+
+    &:hover svg {
+      transform: rotate(90deg);
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--c-heading);
+    outline-offset: 3px;
+  }
+
+  @include tablet {
+    margin: u(16) u(16) 0 0;
+  }
+
+  @include mobile {
+    width: u(32);
+    height: u(32);
+    margin: u(16) u(16) 0 0;
+
+    svg {
+      width: u(16);
+      height: u(16);
+    }
+  }
+}
+
+.popup__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: u(60);
+  padding-top: u(80);
+
+  @include tablet {
+    gap: u(48);
+    padding-top: u(64);
+  }
+
+  @include mobile {
+    gap: u(40);
+    padding-top: u(72);
+  }
+}
+
+// heading (166:1275): 800, по центру, gap 20
+.popup__heading {
+  display: flex;
+  flex-direction: column;
+  gap: u(20);
+  width: min(#{u(800)}, 100%);
+  text-align: center;
+
+  @include tablet {
+    gap: u(16);
+    padding: 0 u(32);
+  }
+
+  @include mobile {
+    gap: u(12);
+    padding: 0 var(--gutter);
+  }
+}
+
+// desktop/Descriptor 22 / 110% / −4%
+.popup__type {
+  font-size: u(22);
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+
+  @include tablet {
+    font-size: u(16);
+  }
+
+  @include mobile {
+    font-size: u(14);
+  }
+}
+
+// desktop/H4 46 Semi Bold / 110% / −3%
+.popup__name {
+  font-size: u(46);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+
+  @include tablet {
+    font-size: u(32);
+  }
+
+  @include mobile {
+    font-size: u(25);
+  }
+}
+
+// desktop/Text1 30 Medium / 120% / −3%
+.popup__location {
+  font-size: u(30);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+
+  @include tablet {
+    font-size: u(20);
+  }
+
+  @include mobile {
+    font-size: u(16);
+  }
+}
+
+.popup__cover {
+  width: 100%;
+  height: u(560);
+
+  @include tablet {
+    height: u(360);
+  }
+
+  @include mobile {
+    height: u(240);
+  }
+}
+
+// text1 (166:1262): 660, группы с gap 20; внутри заголовок + абзац с gap 10
+.popup__text {
+  display: flex;
+  flex-direction: column;
+  gap: u(20);
+  width: min(#{u(660)}, 100%);
+
+  @include tablet {
+    width: min(#{u(560)}, calc(100% - #{u(64)}));
+  }
+
+  @include mobile {
+    width: 100%;
+    padding: 0 var(--gutter);
+  }
+}
+
+.popup__section {
+  display: flex;
+  flex-direction: column;
+  gap: u(10);
+
+  // desktop/H6 36 Regular / 130% / −2%
+  h3 {
+    font-size: u(36);
+    font-weight: 400;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+  }
+
+  // desktop/Text2 22 Regular / 120% / −4%
+  p {
+    font-size: u(22);
+    line-height: 1.2;
+    letter-spacing: -0.04em;
+  }
+
+  @include tablet {
+    h3 {
+      font-size: u(28);
+    }
+
+    p {
+      font-size: u(18);
+    }
+  }
+
+  @include mobile {
+    gap: u(8);
+
+    h3 {
+      font-size: u(22);
+    }
+
+    p {
+      font-size: u(14);
+    }
+  }
+}
+
+// image2 / image3 (167:1298): ряд фото вплотную, равной ширины, высота 620
+.popup__row {
+  display: flex;
+  width: 100%;
+  height: u(620);
+
+  @include tablet {
+    height: u(400);
+  }
+
+  // На телефоне в ряд не больше двух фото; если их три — первое на всю ширину
+  @include mobile {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: u(220);
+    height: auto;
+
+    &[data-count='1'] {
+      grid-template-columns: 1fr;
+      grid-auto-rows: u(240);
+    }
+
+    &[data-count='3'] .popup__img:first-child {
+      grid-column: 1 / -1;
+    }
+  }
+}
+
+.popup__img {
+  display: block;
+  flex: 1 1 0;
+  min-width: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: var(--c-bg);
+}

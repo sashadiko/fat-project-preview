@@ -227,9 +227,11 @@
   }
 }
 
-// number: высота 80, desktop/Numbers1 80 / 100% / −6%; mobile 50
+// number: высота 80, desktop/Numbers1 80 / 100% / −6%; mobile 50.
+// Ширина по содержимому — во время счёта плашка растёт вместе с числом, текст слева
 .stat__value {
   --tag-ls: 0.06em;
+  justify-content: flex-start;
   height: u(80);
   font-size: u(80);
   font-weight: 600;

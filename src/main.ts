@@ -1,6 +1,7 @@
 import '@fontsource-variable/inter/index.css';
 import './styles/main.scss';
 
+import { initCasePopup } from './scripts/case-popup';
 import { initCases } from './scripts/cases';
 import { initContacts } from './scripts/contacts';
 import { initHeroLane, playIntro } from './scripts/hero';
@@ -18,6 +19,7 @@ initHeroLane();
 initMenu();
 initShops();
 initContacts();
+initCasePopup();
 
 // Делим текст на строки только после загрузки шрифта, иначе переносы посчитаются по fallback
 document.fonts.ready.then(() => {

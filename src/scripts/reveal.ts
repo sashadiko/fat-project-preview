@@ -70,10 +70,10 @@ function initUp() {
   });
 }
 
-// Счётчики 0 → N. Ширина плашки жёстко фиксируется по финальному значению, текст по центру —
-// поэтому коробка не прыгает. Все счётчики группы стартуют вместе от одного триггера и идут
-// одним твином, а значение округляется вниз — так каждая цифра становится финальной
-// ровно в последний кадр и все четыре заканчивают одновременно. Срабатывает один раз.
+// Счётчики 0 → N. Плашка подстраивается под текущее число (растёт вместе с ним), текст прижат
+// влево. Все счётчики группы стартуют вместе и идут одним твином, а значение округляется вниз —
+// так каждая цифра становится финальной ровно в последний кадр и все четыре заканчивают
+// одновременно. Срабатывает один раз.
 const COUNTER_DURATION = 1.2;
 
 function initCounters() {
@@ -81,20 +81,9 @@ function initCounters() {
   if (!counters.length) return;
 
   const items = counters.map((el) => {
-    const target = Number(el.dataset.counter);
     const suffix = el.dataset.suffix ?? '';
-    const final = `${target}${suffix}`;
-    const lockWidth = () => {
-      const current = el.textContent;
-      el.style.width = '';
-      el.textContent = final;
-      el.style.width = `${el.getBoundingClientRect().width}px`;
-      el.textContent = current;
-    };
-    lockWidth();
-    window.addEventListener('resize', lockWidth);
     el.textContent = `0${suffix}`;
-    return { el, target, suffix };
+    return { el, target: Number(el.dataset.counter), suffix };
   });
 
   const state = { progress: 0 };
@@ -104,14 +93,17 @@ function initCounters() {
       el.textContent = `${value}${suffix}`;
     });
 
-  // Старт — когда в окно вошла последняя цифра: на tablet/mobile цифры стоят столбиком, и при старте
-  // по верху группы нижние досчитывали бы за пределами экрана
+  // Старт вместе с появлением цифр (как у остальных плашек — верх группы на 88% окна).
+  // На mobile цифры стоят столбиком — ждём, пока в окне окажется половина столбика,
+  // чтобы нижние не досчитали за краем экрана
+  const group = counters[0].closest('[data-reveal-group]') ?? counters[0];
+  const mobile = window.matchMedia('(max-width: 767px)').matches;
   ScrollTrigger.create({
-    trigger: counters[counters.length - 1],
-    start: 'bottom 95%',
+    trigger: group,
+    start: mobile ? 'center bottom' : START,
     once: true,
     onEnter: () => {
-      gsap.to(state, { progress: 1, duration: COUNTER_DURATION, ease: 'power1.out', delay: 0.15, onUpdate: render });
+      gsap.to(state, { progress: 1, duration: COUNTER_DURATION, ease: 'power1.out', delay: 0.1, onUpdate: render });
     },
   });
 }
