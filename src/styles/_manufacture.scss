@@ -1,9 +1,9 @@
 @use 'tokens' as *;
 
-// Figma desktop: manufacture (15:2755) — y 1970 (220 от about), колонка 1720, gap 60, карточки 553 × 3, gap 30.
+// Figma desktop: manufacture (15:2755) — y 2000 (235 от about), колонка 1720, gap 60, карточки 553 × 3, gap 30.
 // Mobile (26:3402): 80 от about, заголовок 30px, gap 32, карточка 327. Tablet-макета нет — как mobile, крупнее.
 .manufacture {
-  padding: u(220) var(--gutter) 0;
+  padding: u(235) var(--gutter) 0;
   // Карточки, ждущие за правым краем, не должны давать горизонтальный скролл (clip не ломает sticky)
   overflow-x: clip;
 

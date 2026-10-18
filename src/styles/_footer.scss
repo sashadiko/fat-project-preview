@@ -1,14 +1,14 @@
 @use 'tokens' as *;
 
-// Figma desktop: footer (21:2870) — y 8348 (220 от stages), 1920 × 930, градиент 184.66°, padding 100;
-// container 1720 × 730: слева текст + лого/реквизиты (620, space-between), справа контакты
+// Figma desktop: footer (21:2870) — 220 от stages, 1920 × 960, градиент 185.35°, padding 100;
+// container 1720 × 760: слева текст + лого/реквизиты (620, space-between), справа контакты
 // (1006, по правому краю, space-between: телефоны сверху с gap 60, почта снизу).
-// Mobile (26:3435): без фона, 80 от stages, колонка gap 56: текст, контакты (gap 24),
-// реквизиты (177) + лого 110 × 50 (gap 24).
+// Mobile (26:3435): без фона, 80 от stages, колонка gap 32: текст, контакты (gap 16),
+// реквизиты (270) + лого 110 × 50 (gap 16).
 .footer {
   margin-top: u(220);
   padding: u(100);
-  background: linear-gradient(184.66deg, var(--c-bg) 58.74%, #33494e 100%);
+  background: linear-gradient(185.35deg, var(--c-bg) 58.74%, #33494e 100%);
 
   @include tablet {
     margin-top: u(120);
@@ -26,7 +26,7 @@
   display: flex;
   justify-content: space-between;
   gap: u(94);
-  min-height: u(730);
+  min-height: u(760);
 
   @include below-desktop {
     flex-direction: column;
@@ -36,7 +36,7 @@
   }
 
   @include mobile {
-    gap: u(56);
+    gap: u(32);
   }
 }
 
@@ -101,19 +101,19 @@
   }
 }
 
-// Frame 134: лого 220 × 100, под ним реквизиты, gap 30. Mobile (Frame 135): реквизиты, под ними лого 110 × 50, gap 24
+// Frame 134: лого 220 × 100, под ним реквизиты, gap 20. Mobile (Frame 135): реквизиты, под ними лого 110 × 50, gap 16
 .footer__brand {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: u(30);
+  gap: u(20);
 
   @include below-desktop {
     order: 2;
   }
 
   @include mobile {
-    gap: u(24);
+    gap: u(16);
   }
 }
 
@@ -136,17 +136,17 @@
   }
 }
 
-// desktop/Navigation2 16 / 100% / −4%, Text/Gray, max 530; mobile 14 / 120% / −4%, ширина 177
+// desktop/Navigation2 16 / 110% / −4%, Text/Gray, max 450; mobile 14 / 120% / −4%, ширина 270
 .footer__legal {
-  max-width: u(530);
+  max-width: u(450);
   color: var(--c-gray);
   font-size: max(12px, #{u(16)});
-  line-height: 1;
+  line-height: 1.1;
   letter-spacing: -0.04em;
 
   @include mobile {
     order: -1;
-    max-width: u(177);
+    max-width: u(270);
     font-size: u(14);
     line-height: 1.2;
   }
@@ -173,7 +173,7 @@
   }
 
   @include mobile {
-    gap: u(24);
+    gap: u(16);
   }
 }
 

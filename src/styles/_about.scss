@@ -1,6 +1,6 @@
 @use 'tokens' as *;
 
-// Figma desktop: about (2:3807) — numbers x100 / text x975, y 1220 (220 от hero).
+// Figma desktop: about (2:3807) — numbers x100 / text x975, y 1235 (235 от hero).
 // Mobile (21:3392): колонка 327, сначала текст, потом цифры. Tablet (1:929): текст, пункты, цифры в 2 колонки.
 .about {
   isolation: isolate;
@@ -9,7 +9,7 @@
   grid-template-columns: u(740) u(845);
   justify-content: space-between;
   align-items: start;
-  padding: u(220) var(--gutter) 0;
+  padding: u(235) var(--gutter) 0;
 
   @include tablet {
     display: block;
